@@ -1,0 +1,170 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>&#21015;&#20027;&#20803;Gauss&#28040;&#20803;&#27861;</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-05"><meta name="DC.source" content="L_GaussElimination.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>&#21015;&#20027;&#20803;Gauss&#28040;&#20803;&#27861;</h1><pre class="codeinput"><span class="keyword">function</span> [res] = L_GaussElimination(A,b)
+<span class="comment">%  inputs:</span>
+<span class="comment">%         A:&#31995;&#25968;&#30697;&#38453;&#65292;&#20026;n*n&#32500;&#26041;&#38453;</span>
+<span class="comment">%         b:&#36733;&#33655;&#30697;&#38453;&#65292;&#20026;n*1&#32500;&#30697;&#38453;</span>
+<span class="comment">%  outputs&#65306;</span>
+<span class="comment">%         res:&#35745;&#31639;&#32467;&#26524;&#21521;&#37327;,&#20026;n*1&#20026;&#30697;&#38453;</span>
+
+<span class="comment">% &#21028;&#26029;&#36755;&#20837;&#30697;&#38453;&#32500;&#24230;&#26159;&#21542;&#28385;&#36275;&#35201;&#27714;</span>
+[row_A,col_A] = size(A);
+[row_b,~] = size(b);
+
+<span class="comment">% &#21021;&#22987;&#21270;r_matrix&#30697;&#38453;</span>
+res = zeros(row_b,1);
+<span class="comment">% &#21028;&#26029;&#36755;&#20837;&#30340;&#32500;&#24230;&#26159;&#21542;&#28385;&#36275;&#35201;&#27714;</span>
+<span class="keyword">if</span> (row_A ~= col_A) || (row_A ~= row_b)
+    <span class="comment">% &#19981;&#28385;&#36275;&#21017;&#36755;&#20986;&#38169;&#35823;&#25552;&#31034;</span>
+    print(<span class="string">'&#36755;&#20837;&#38169;&#35823;&#65281;'</span>);
+<span class="keyword">else</span>
+    <span class="comment">% &#28385;&#36275;&#21017;&#36827;&#34892;&#19979;&#19968;&#27493;&#36816;&#31639;</span>
+    <span class="keyword">for</span> k = 1:row_A-1
+        <span class="comment">% &#25214;&#20027;&#23545;&#35282;&#20803;&#21450;&#20197;&#19979;&#30340;&#26368;&#22823;&#20540;&#36827;&#34892;&#20132;&#25442;</span>
+        [~,rows]=max(abs(A(k:row_A,k)));
+        rows=rows+k-1; <span class="comment">%rows&#36716;&#25442;&#20026;&#22312;&#30697;&#38453;&#20013;&#30340;&#34892;&#21495;</span>
+        A([k rows],:)=A([rows k],:);<span class="comment">%&#20132;&#25442;&#30697;&#38453;A&#30340;&#20004;&#34892;</span>
+        b([k,rows],1)=b([rows,k],1); <span class="comment">%&#20132;&#25442;&#21521;&#37327;b&#30340;&#20004;&#34892;</span>
+        <span class="comment">% &#24490;&#29615;&#35745;&#31639;&#31532;k+1&#34892;&#21040;&#26368;&#21518;&#19968;&#34892;</span>
+        <span class="keyword">for</span> i = k+1:row_A
+           beishu = A(i,k) / A(k,k); <span class="comment">%&#26356;&#26032;&#20493;&#25968;</span>
+           <span class="comment">% &#26356;&#26032;&#27599;&#19968;&#34892;&#20174;&#31532;i&#20010;&#20803;&#32032;&#24320;&#22987;&#21518;&#30340;&#25152;&#26377;&#20803;&#32032;</span>
+           <span class="keyword">for</span> j = k:col_A
+             A(i,j) = A(i,j) - beishu*A(k,j); <span class="comment">% &#26356;&#26032;a(i,j)</span>
+           <span class="keyword">end</span>
+             b(i,1) = b(i,1) - b(k,1)*beishu; <span class="comment">% &#26356;&#26032;b(i)</span>
+        <span class="keyword">end</span> <span class="comment">%for&#24490;&#29615;&#32467;&#26463;</span>
+    <span class="keyword">end</span> <span class="comment">% for&#24490;&#29615;&#32467;&#26463;</span>
+    <span class="comment">% &#22238;&#20195;&#36807;&#31243;,&#20174;&#26368;&#21518;&#19968;&#34892;&#24320;&#22987;</span>
+    res(row_A) = b(row_A)/A(row_A,col_A);
+    <span class="keyword">for</span> k = row_A-1:-1:1<span class="comment">%&#20498;&#30528;&#36208;</span>
+        sum_temp = 0;
+        <span class="keyword">for</span> j = k+1:col_A
+            sum_temp = sum_temp + A(k,j)*res(j);
+        <span class="keyword">end</span>
+        res(k,1) = (b(k,1) - sum_temp)/A(k,k);
+    <span class="keyword">end</span>
+<span class="keyword">end</span> <span class="comment">% &#26465;&#20214;&#21028;&#26029;&#32467;&#26463;</span>
+<span class="keyword">end</span> <span class="comment">% &#20989;&#25968;&#32467;&#26463;</span>
+</pre><pre class="codeoutput error">&#36755;&#20837;&#21442;&#25968;&#30340;&#25968;&#30446;&#19981;&#36275;&#12290;
+
+&#20986;&#38169; L_GaussElimination (&#31532; 10 &#34892;)
+[row_A,col_A] = size(A);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% 列主元Gauss消元法
+function [res] = L_GaussElimination(A,b)
+%  inputs:
+%         A:系数矩阵，为n*n维方阵
+%         b:载荷矩阵，为n*1维矩阵
+%  outputs：
+%         res:计算结果向量,为n*1为矩阵
+
+% 判断输入矩阵维度是否满足要求
+[row_A,col_A] = size(A);
+[row_b,~] = size(b);
+
+% 初始化r_matrix矩阵
+res = zeros(row_b,1);
+% 判断输入的维度是否满足要求
+if (row_A ~= col_A) || (row_A ~= row_b)
+    % 不满足则输出错误提示
+    print('输入错误！');
+else
+    % 满足则进行下一步运算
+    for k = 1:row_A-1
+        % 找主对角元及以下的最大值进行交换
+        [~,rows]=max(abs(A(k:row_A,k)));
+        rows=rows+k-1; %rows转换为在矩阵中的行号
+        A([k rows],:)=A([rows k],:);%交换矩阵A的两行
+        b([k,rows],1)=b([rows,k],1); %交换向量b的两行
+        % 循环计算第k+1行到最后一行
+        for i = k+1:row_A
+           beishu = A(i,k) / A(k,k); %更新倍数
+           % 更新每一行从第i个元素开始后的所有元素
+           for j = k:col_A
+             A(i,j) = A(i,j) - beishu*A(k,j); % 更新a(i,j)
+           end
+             b(i,1) = b(i,1) - b(k,1)*beishu; % 更新b(i) 
+        end %for循环结束
+    end % for循环结束
+    % 回代过程,从最后一行开始
+    res(row_A) = b(row_A)/A(row_A,col_A);
+    for k = row_A-1:-1:1%倒着走
+        sum_temp = 0;
+        for j = k+1:col_A
+            sum_temp = sum_temp + A(k,j)*res(j);
+        end
+        res(k,1) = (b(k,1) - sum_temp)/A(k,k);
+    end
+end % 条件判断结束
+end % 函数结束
+##### SOURCE END #####
+--></body></html>

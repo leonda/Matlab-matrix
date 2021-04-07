@@ -1,0 +1,223 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>reverse_and_det</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-04"><meta name="DC.source" content="reverse_and_det.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#21033;&#29992;LU&#20998;&#35299;&#27714;A&#30340;&#34892;&#21015;&#24335;&#21644;&#36870;&#30697;&#38453;</span>
+<span class="keyword">function</span> [rever_A,det_A]=reverse_and_det(A)
+<span class="comment">%%LU&#20998;&#35299;</span>
+<span class="comment">%  inputs:</span>
+<span class="comment">%         A:&#31995;&#25968;&#30697;&#38453;&#65292;&#20026;n*n&#32500;&#26041;&#38453;</span>
+<span class="comment">%  outputs&#65306;</span>
+<span class="comment">%         A&#30340;&#36870;</span>
+<span class="comment">%         det(A)</span>
+<span class="comment">%&#33719;&#24471;&#30697;&#38453;&#30340;&#32500;&#24230;</span>
+[row_A,col_A] = size(A);
+<span class="comment">% &#21028;&#26029;&#36755;&#20837;&#30340;&#32500;&#24230;&#26159;&#21542;&#28385;&#36275;&#35201;&#27714;</span>
+<span class="keyword">if</span> (row_A ~= col_A)
+    <span class="comment">% &#19981;&#28385;&#36275;&#21017;&#36755;&#20986;&#38169;&#35823;&#25552;&#31034;</span>
+    print(<span class="string">'&#36755;&#20837;&#38169;&#35823;&#65281;'</span>);
+<span class="keyword">else</span>
+    <span class="comment">% &#28385;&#36275;&#21017;&#36827;&#34892;&#19979;&#19968;&#27493;&#36816;&#31639;</span>
+     n=row_A;
+     L=zeros(n,n);
+     U=zeros(n,n);
+     <span class="keyword">for</span> i=1:row_A
+         L(i,i)=1;
+     <span class="keyword">end</span>
+     <span class="keyword">for</span> k = 1:n-1
+        <span class="comment">% &#26816;&#26597;&#20027;&#23545;&#35282;&#20803;&#32032;&#31532;k&#34892;&#30340;&#31532;k&#20010;&#20803;&#32032;&#26159;&#21542;&#20026;0</span>
+        <span class="keyword">if</span> A(k,k) == 0
+            print(<span class="string">'&#20027;&#23545;&#35282;&#20803;&#32032;&#38169;&#35823;&#65281;'</span>);
+        <span class="keyword">else</span>
+            <span class="comment">% &#24490;&#29615;&#35745;&#31639;&#31532;k+1&#34892;&#21040;&#26368;&#21518;&#19968;&#34892;</span>
+            <span class="keyword">for</span> i = k+1:n
+               beishu = A(i,k) / A(k,k); <span class="comment">%&#26356;&#26032;&#20493;&#25968;</span>
+               L(i,k)=beishu;
+               <span class="comment">% &#26356;&#26032;&#27599;&#19968;&#34892;&#20174;&#31532;i&#20010;&#20803;&#32032;&#24320;&#22987;&#21518;&#30340;&#25152;&#26377;&#20803;&#32032;</span>
+               <span class="keyword">for</span> j = k:n
+                   A(i,j) = A(i,j) - beishu*A(k,j); <span class="comment">% &#26356;&#26032;a(i,j)</span>
+               <span class="keyword">end</span>
+            <span class="keyword">end</span> <span class="comment">%for&#24490;&#29615;&#32467;&#26463;</span>
+        <span class="keyword">end</span> <span class="comment">% &#26465;&#20214;2&#32467;&#26463;</span>
+    <span class="keyword">end</span> <span class="comment">% for&#24490;&#29615;&#32467;&#26463;</span>
+    U=A;
+    det_A=1;
+    <span class="comment">%A&#30340;&#34892;&#21015;&#24335;&#31561;&#20110;U&#30340;&#23545;&#35282;&#20803;&#30340;&#20056;&#31215;</span>
+    <span class="keyword">for</span> i=1:n
+        det_A=det_A*U(i,i);
+    <span class="keyword">end</span>
+    I=eye(n);
+    Y=zeros(n,n);
+     <span class="comment">% &#22238;&#20195;&#36807;&#31243;,&#20174;&#26368;&#21518;&#19968;&#34892;&#24320;&#22987;</span>
+    L=L'<span class="comment">%&#36716;&#32622;&#21464;&#20026;&#19978;&#19977;&#35282;&#27714;&#35299;&#23558;&#32467;&#26524;&#36716;&#32622;&#21363;&#21487;&#24471;&#21040;&#31572;&#26696;I=LY</span>
+    <span class="keyword">for</span> i=1:n
+        Y(n,i) = I(n,i)/L(n,n);
+        <span class="keyword">for</span> k = n-1:-1:1<span class="comment">%&#20498;&#30528;&#36208;</span>
+            sum_temp = 0;
+            <span class="keyword">for</span> j = k+1:n
+                sum_temp = sum_temp + L(k,j)*Y(j,i);
+            <span class="keyword">end</span>
+            Y(k,i) = (I(k,i) - sum_temp)/L(k,k);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    Y=Y';<span class="comment">%Y=UX Y&#36716;&#25442;&#20026;&#27491;&#30830;&#30340;&#19979;&#19977;&#35282;</span>
+    X=zeros(n,n);
+    <span class="comment">%&#27714;A&#30340;&#36870;&#30697;&#38453;</span>
+    <span class="keyword">for</span> i=1:n
+        X(n,i) = Y(n,i)/U(n,n);
+        <span class="keyword">for</span> k = n-1:-1:1<span class="comment">%&#20498;&#30528;&#36208;</span>
+            sum_temp = 0;
+            <span class="keyword">for</span> j = k+1:n
+                sum_temp = sum_temp + U(k,j)*X(j,i);
+            <span class="keyword">end</span>
+            X(k,i) = (Y(k,i) - sum_temp)/U(k,k);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    rever_A=X;
+<span class="keyword">end</span><span class="comment">%&#20989;&#25968;&#32467;&#26463;</span>
+</pre><pre class="codeoutput error">&#36755;&#20837;&#21442;&#25968;&#30340;&#25968;&#30446;&#19981;&#36275;&#12290;
+
+&#20986;&#38169; reverse_and_det (&#31532; 10 &#34892;)
+[row_A,col_A] = size(A);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%利用LU分解求A的行列式和逆矩阵
+function [rever_A,det_A]=reverse_and_det(A)
+%%LU分解
+%  inputs:
+%         A:系数矩阵，为n*n维方阵
+%  outputs：
+%         A的逆
+%         det(A)
+%获得矩阵的维度
+[row_A,col_A] = size(A);
+% 判断输入的维度是否满足要求
+if (row_A ~= col_A)
+    % 不满足则输出错误提示
+    print('输入错误！');
+else
+    % 满足则进行下一步运算
+     n=row_A;
+     L=zeros(n,n);
+     U=zeros(n,n);
+     for i=1:row_A
+         L(i,i)=1;
+     end
+     for k = 1:n-1
+        % 检查主对角元素第k行的第k个元素是否为0
+        if A(k,k) == 0
+            print('主对角元素错误！');
+        else
+            % 循环计算第k+1行到最后一行
+            for i = k+1:n
+               beishu = A(i,k) / A(k,k); %更新倍数
+               L(i,k)=beishu;
+               % 更新每一行从第i个元素开始后的所有元素
+               for j = k:n
+                   A(i,j) = A(i,j) - beishu*A(k,j); % 更新a(i,j)
+               end 
+            end %for循环结束
+        end % 条件2结束
+    end % for循环结束
+    U=A;
+    det_A=1;
+    %A的行列式等于U的对角元的乘积
+    for i=1:n
+        det_A=det_A*U(i,i);
+    end
+    I=eye(n);
+    Y=zeros(n,n);
+     % 回代过程,从最后一行开始
+    L=L'%转置变为上三角求解将结果转置即可得到答案I=LY
+    for i=1:n    
+        Y(n,i) = I(n,i)/L(n,n);
+        for k = n-1:-1:1%倒着走
+            sum_temp = 0;
+            for j = k+1:n
+                sum_temp = sum_temp + L(k,j)*Y(j,i);
+            end
+            Y(k,i) = (I(k,i) - sum_temp)/L(k,k);
+        end
+    end
+    Y=Y';%Y=UX Y转换为正确的下三角
+    X=zeros(n,n);
+    %求A的逆矩阵
+    for i=1:n    
+        X(n,i) = Y(n,i)/U(n,n);
+        for k = n-1:-1:1%倒着走
+            sum_temp = 0;
+            for j = k+1:n
+                sum_temp = sum_temp + U(k,j)*X(j,i);
+            end
+            X(k,i) = (Y(k,i) - sum_temp)/U(k,k);
+        end
+    end
+    rever_A=X;
+end%函数结束
+##### SOURCE END #####
+--></body></html>

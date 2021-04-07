@@ -1,0 +1,199 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>cholesky</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-04"><meta name="DC.source" content="cholesky.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#27714;&#30697;&#38453;A&#30340;Cholesky&#20998;&#35299;</span>
+<span class="keyword">function</span> [L,x]=cholesky(A,b)
+<span class="comment">%  inputs:</span>
+<span class="comment">%         A:&#31995;&#25968;&#30697;&#38453;&#65292;&#20026;n*n&#32500;&#26041;&#38453;</span>
+<span class="comment">%         b:n*1</span>
+<span class="comment">%  outputs&#65306;</span>
+<span class="comment">%         L:&#19979;&#19977;&#35282;&#30697;&#38453;&#65292;n*n&#30697;&#38453;</span>
+<span class="comment">%         x:&#32447;&#24615;&#26041;&#31243;&#32452;&#30340;&#35299;</span>
+<span class="comment">% &#21028;&#26029;&#36755;&#20837;&#30697;&#38453;&#32500;&#24230;&#26159;&#21542;&#28385;&#36275;&#35201;&#27714;</span>
+[row_A,col_A] = size(A);
+
+<span class="comment">% &#21028;&#26029;&#36755;&#20837;&#30340;&#32500;&#24230;&#26159;&#21542;&#28385;&#36275;&#35201;&#27714;</span>
+<span class="keyword">if</span> (row_A ~= col_A)
+    <span class="comment">% &#19981;&#28385;&#36275;&#21017;&#36755;&#20986;&#38169;&#35823;&#25552;&#31034;</span>
+    print(<span class="string">'&#36755;&#20837;&#38169;&#35823;&#65281;'</span>);
+<span class="keyword">else</span>
+    <span class="comment">% &#28385;&#36275;&#21017;&#36827;&#34892;&#19979;&#19968;&#27493;&#36816;&#31639;</span>
+    <span class="comment">%&#21021;&#22987;&#21270;L&#12289;U&#12289;P</span>
+    n=row_A;
+    L=zeros(n,n);
+    L(1,1)=sqrt(A(1,1));
+    <span class="keyword">for</span> i=2:n
+        L(i,1)=A(i,1)/L(1,1);
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i=2:n<span class="comment">%&#36880;&#21015;&#35745;&#31639;</span>
+        sum=0;
+        <span class="keyword">for</span> k=1:i-1
+            sum=sum+L(i,k)*L(i,k);
+        <span class="keyword">end</span>
+        L(i,i)=sqrt(A(i,i)-sum)
+        <span class="keyword">for</span> j=i+1:n <span class="comment">%&#20174;&#23545;&#35282;&#20803;&#21518;&#19968;&#20010;&#20803;&#32032;&#35745;&#31639;&#21040;&#35813;&#21015;&#26411;&#23614;</span>
+            sum=0;
+            <span class="keyword">for</span> k=1:i-1
+                sum=sum+L(i,k)*L(j,k);
+            <span class="keyword">end</span>
+            L(j,i)=(A(i,j)-sum)/L(i,i);
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>  <span class="comment">% end cholesky&#20998;&#35299;</span>
+    <span class="comment">%&#27714;&#35299;&#26041;&#31243;&#32452;</span>
+    Y=zeros(n,1);
+    <span class="comment">%LY=b</span>
+    Y(1) = b(1)/L(1,1);
+    <span class="keyword">for</span> k = 2:n
+        sum_temp = 0;
+        <span class="keyword">for</span> j = 1:k-1
+            sum_temp = sum_temp + L(k,j)*Y(j);
+        <span class="keyword">end</span>
+        Y(k) = (b(k) - sum_temp)/L(k,k)
+    <span class="keyword">end</span>
+    <span class="comment">%&#27714;x</span>
+    L_=L'<span class="comment">%L_*x=Y</span>
+    x=zeros(n,1)
+    x(n) = Y(n)/L_(n,n)
+    <span class="keyword">for</span> k = n-1:-1:1<span class="comment">%&#20498;&#30528;&#36208;</span>
+        sum_temp = 0;
+        <span class="keyword">for</span> j = k+1:n
+        sum_temp = sum_temp + L_(k,j)*x(j);
+        <span class="keyword">end</span>
+        x(k) = (Y(k) - sum_temp)/L_(k,k)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput error">&#36755;&#20837;&#21442;&#25968;&#30340;&#25968;&#30446;&#19981;&#36275;&#12290;
+
+&#20986;&#38169; cholesky (&#31532; 10 &#34892;)
+[row_A,col_A] = size(A);
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%求矩阵A的Cholesky分解
+function [L,x]=cholesky(A,b)
+%  inputs:
+%         A:系数矩阵，为n*n维方阵
+%         b:n*1
+%  outputs：
+%         L:下三角矩阵，n*n矩阵
+%         x:线性方程组的解
+% 判断输入矩阵维度是否满足要求
+[row_A,col_A] = size(A);
+
+% 判断输入的维度是否满足要求
+if (row_A ~= col_A)
+    % 不满足则输出错误提示
+    print('输入错误！');
+else
+    % 满足则进行下一步运算
+    %初始化L、U、P
+    n=row_A;
+    L=zeros(n,n);
+    L(1,1)=sqrt(A(1,1));
+    for i=2:n
+        L(i,1)=A(i,1)/L(1,1);
+    end
+    for i=2:n%逐列计算
+        sum=0;
+        for k=1:i-1
+            sum=sum+L(i,k)*L(i,k);
+        end
+        L(i,i)=sqrt(A(i,i)-sum)
+        for j=i+1:n %从对角元后一个元素计算到该列末尾
+            sum=0;
+            for k=1:i-1
+                sum=sum+L(i,k)*L(j,k);
+            end
+            L(j,i)=(A(i,j)-sum)/L(i,i);
+        end
+    end  % end cholesky分解
+    %求解方程组
+    Y=zeros(n,1);
+    %LY=b   
+    Y(1) = b(1)/L(1,1);
+    for k = 2:n 
+        sum_temp = 0;
+        for j = 1:k-1
+            sum_temp = sum_temp + L(k,j)*Y(j);
+        end
+        Y(k) = (b(k) - sum_temp)/L(k,k)
+    end
+    %求x
+    L_=L'%L_*x=Y
+    x=zeros(n,1)    
+    x(n) = Y(n)/L_(n,n)
+    for k = n-1:-1:1%倒着走
+        sum_temp = 0;
+        for j = k+1:n
+        sum_temp = sum_temp + L_(k,j)*x(j);
+        end
+        x(k) = (Y(k) - sum_temp)/L_(k,k)
+    end
+end
+##### SOURCE END #####
+--></body></html>

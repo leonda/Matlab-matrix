@@ -1,0 +1,355 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>usefunction</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-05"><meta name="DC.source" content="usefunction.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#35843;&#29992;&#20989;&#25968;</span>
+a=[32,-13,0,0,0,-10,0,0,0;
+   -13,35,-9,0,-11,0,0,0,0;
+   0,-9,31,-10,0,0,0,0,0;
+   0,0,-10,79,-30,0,0,0,-9;
+   0,0,0,-30,57,-7,0,-5,0;
+   0,0,0,0,-7,47,-30,0,0;
+   0,0,0,0,0,30,41,0,0;
+   0,0,0,0,-5,0,0,27,-2;
+   0,0,0,-9,0,0,0,-2,29]
+b=[-15;27;-23;0;-20;12;-7;7;10]
+disp(<span class="string">'&#35843;&#29992;Gauss&#28040;&#21435;&#27861;:'</span>)
+res_Gauss=GaussElimination(a,b)
+disp(<span class="string">'&#35843;&#29992;&#21015;&#20027;&#20803;&#30340;&#39640;&#26031;&#28040;&#21435;&#27861;:'</span>)
+res_L_Gauss=L_GaussElimination(a,b)
+disp(<span class="string">'&#35843;&#29992;LU&#20998;&#35299;:'</span>)
+[L,U]=LU(a)
+disp(<span class="string">'&#35843;&#29992;&#24102;&#26377;&#21015;&#20027;&#20803;&#30340;LU&#20998;&#35299;:'</span>)
+[L,U,P]=LUP(a)
+disp(<span class="string">'&#35843;&#29992;reverse_and_det&#36755;&#20986;&#30697;&#38453;&#30340;&#36870;&#21644;&#34892;&#21015;&#24335;:'</span>)
+[rever_A,det_A]=reverse_and_det(a)
+</pre><pre class="codeoutput">
+a =
+
+    32   -13     0     0     0   -10     0     0     0
+   -13    35    -9     0   -11     0     0     0     0
+     0    -9    31   -10     0     0     0     0     0
+     0     0   -10    79   -30     0     0     0    -9
+     0     0     0   -30    57    -7     0    -5     0
+     0     0     0     0    -7    47   -30     0     0
+     0     0     0     0     0    30    41     0     0
+     0     0     0     0    -5     0     0    27    -2
+     0     0     0    -9     0     0     0    -2    29
+
+
+b =
+
+   -15
+    27
+   -23
+     0
+   -20
+    12
+    -7
+     7
+    10
+
+&#35843;&#29992;Gauss&#28040;&#21435;&#27861;:
+
+res_Gauss =
+
+   -0.3188
+    0.3273
+   -0.7205
+   -0.2282
+   -0.4469
+    0.0544
+   -0.2105
+    0.1978
+    0.2877
+
+&#35843;&#29992;&#21015;&#20027;&#20803;&#30340;&#39640;&#26031;&#28040;&#21435;&#27861;:
+
+res_L_Gauss =
+
+   -0.3188
+    0.3273
+   -0.7205
+   -0.2282
+   -0.4469
+    0.0544
+   -0.2105
+    0.1978
+    0.2877
+
+&#35843;&#29992;LU&#20998;&#35299;:
+
+L =
+
+  &#21015; 1 &#33267; 7
+
+    1.0000         0         0         0         0         0         0
+   -0.4063    1.0000         0         0         0         0         0
+         0   -0.3028    1.0000         0         0         0         0
+         0         0   -0.3537    1.0000         0         0         0
+         0         0         0   -0.3975    1.0000         0         0
+         0         0         0         0   -0.1569    1.0000         0
+         0         0         0         0         0    0.6540    1.0000
+         0         0         0         0   -0.1121   -0.0175   -0.0087
+         0         0         0   -0.1193   -0.0834   -0.0142   -0.0070
+
+  &#21015; 8 &#33267; 9
+
+         0         0
+         0         0
+         0         0
+         0         0
+         0         0
+         0         0
+         0         0
+    1.0000         0
+   -0.0917    1.0000
+
+
+U =
+
+  &#21015; 1 &#33267; 7
+
+   32.0000  -13.0000         0         0         0  -10.0000         0
+         0   29.7188   -9.0000         0  -11.0000   -4.0625         0
+         0         0   28.2744  -10.0000   -3.3312   -1.2303         0
+         0         0         0   75.4632  -31.1782   -0.4351         0
+         0         0         0         0   44.6053   -7.1730         0
+         0         0         0         0         0   45.8743  -30.0000
+         0         0         0         0         0         0   60.6188
+         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0
+
+  &#21015; 8 &#33267; 9
+
+         0         0
+         0         0
+         0         0
+         0   -9.0000
+   -5.0000   -3.5779
+   -0.7847   -0.5615
+    0.5131    0.3672
+   26.4302   -2.4077
+         0   27.4021
+
+&#35843;&#29992;&#24102;&#26377;&#21015;&#20027;&#20803;&#30340;LU&#20998;&#35299;:
+
+L =
+
+  &#21015; 1 &#33267; 7
+
+    1.0000         0         0         0         0         0         0
+   -0.4063    1.0000         0         0         0         0         0
+         0   -0.3028    1.0000         0         0         0         0
+         0         0   -0.3537    1.0000         0         0         0
+         0         0         0   -0.3975    1.0000         0         0
+         0         0         0         0   -0.1569    1.0000         0
+         0         0         0         0         0    0.6540    1.0000
+         0         0         0         0   -0.1121   -0.0175   -0.0087
+         0         0         0   -0.1193   -0.0834   -0.0142   -0.0070
+
+  &#21015; 8 &#33267; 9
+
+         0         0
+         0         0
+         0         0
+         0         0
+         0         0
+         0         0
+         0         0
+    1.0000         0
+   -0.0917    1.0000
+
+
+U =
+
+  &#21015; 1 &#33267; 7
+
+   32.0000  -13.0000         0         0         0  -10.0000         0
+         0   29.7188   -9.0000         0  -11.0000   -4.0625         0
+         0         0   28.2744  -10.0000   -3.3312   -1.2303         0
+         0         0         0   75.4632  -31.1782   -0.4351         0
+         0         0         0         0   44.6053   -7.1730         0
+         0         0         0         0         0   45.8743  -30.0000
+         0         0         0         0         0         0   60.6188
+         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0
+
+  &#21015; 8 &#33267; 9
+
+         0         0
+         0         0
+         0         0
+         0   -9.0000
+   -5.0000   -3.5779
+   -0.7847   -0.5615
+    0.5131    0.3672
+   26.4302   -2.4077
+         0   27.4021
+
+
+P =
+
+     1     0     0     0     0     0     0     0     0
+     0     1     0     0     0     0     0     0     0
+     0     0     1     0     0     0     0     0     0
+     0     0     0     1     0     0     0     0     0
+     0     0     0     0     1     0     0     0     0
+     0     0     0     0     0     1     0     0     0
+     0     0     0     0     0     0     1     0     0
+     0     0     0     0     0     0     0     1     0
+     0     0     0     0     0     0     0     0     1
+
+&#35843;&#29992;reverse_and_det&#36755;&#20986;&#30697;&#38453;&#30340;&#36870;&#21644;&#34892;&#21015;&#24335;:
+
+L =
+
+  &#21015; 1 &#33267; 7
+
+    1.0000   -0.4063         0         0         0         0         0
+         0    1.0000   -0.3028         0         0         0         0
+         0         0    1.0000   -0.3537         0         0         0
+         0         0         0    1.0000   -0.3975         0         0
+         0         0         0         0    1.0000   -0.1569         0
+         0         0         0         0         0    1.0000    0.6540
+         0         0         0         0         0         0    1.0000
+         0         0         0         0         0         0         0
+         0         0         0         0         0         0         0
+
+  &#21015; 8 &#33267; 9
+
+         0         0
+         0         0
+         0         0
+         0   -0.1193
+   -0.1121   -0.0834
+   -0.0175   -0.0142
+   -0.0087   -0.0070
+    1.0000   -0.0917
+         0    1.0000
+
+
+rever_A =
+
+  &#21015; 1 &#33267; 7
+
+    0.0375    0.0153    0.0053    0.0028    0.0052    0.0060    0.0044
+    0.0153    0.0375    0.0128    0.0060    0.0110    0.0033    0.0024
+    0.0047    0.0115    0.0380    0.0076    0.0065    0.0013    0.0010
+    0.0008    0.0019    0.0064    0.0180    0.0102    0.0011    0.0008
+    0.0004    0.0010    0.0035    0.0098    0.0236    0.0025    0.0018
+    0.0000    0.0001    0.0004    0.0010    0.0024    0.0148    0.0108
+   -0.0000   -0.0001   -0.0003   -0.0007   -0.0018   -0.0108    0.0165
+    0.0001    0.0002    0.0008    0.0022    0.0046    0.0005    0.0004
+    0.0002    0.0006    0.0020    0.0057    0.0035    0.0004    0.0003
+
+  &#21015; 8 &#33267; 9
+
+    0.0010    0.0009
+    0.0022    0.0020
+    0.0014    0.0024
+    0.0023    0.0057
+    0.0046    0.0034
+    0.0005    0.0003
+   -0.0003   -0.0002
+    0.0381    0.0033
+    0.0033    0.0365
+
+
+det_A =
+
+   1.8229e+14
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%调用函数
+a=[32,-13,0,0,0,-10,0,0,0;
+   -13,35,-9,0,-11,0,0,0,0;
+   0,-9,31,-10,0,0,0,0,0;
+   0,0,-10,79,-30,0,0,0,-9;
+   0,0,0,-30,57,-7,0,-5,0;
+   0,0,0,0,-7,47,-30,0,0;
+   0,0,0,0,0,30,41,0,0;
+   0,0,0,0,-5,0,0,27,-2;
+   0,0,0,-9,0,0,0,-2,29]
+b=[-15;27;-23;0;-20;12;-7;7;10]
+disp('调用Gauss消去法:')
+res_Gauss=GaussElimination(a,b)
+disp('调用列主元的高斯消去法:')
+res_L_Gauss=L_GaussElimination(a,b)
+disp('调用LU分解:')
+[L,U]=LU(a)
+disp('调用带有列主元的LU分解:')
+[L,U,P]=LUP(a)
+disp('调用reverse_and_det输出矩阵的逆和行列式:')
+[rever_A,det_A]=reverse_and_det(a)
+
+
+
+##### SOURCE END #####
+--></body></html>

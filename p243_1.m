@@ -1,0 +1,29 @@
+A=[-2000,999.75;1,-1];
+[u,v]=dsolve('Du=-2000*u+999.75*v+1000.25,Dv=u-v','u(0)=0,v(0)=-2');
+uf=matlabFunction(u);
+vf=matlabFunction(v);
+uh=zeros(1,100);
+vh=zeros(1,100);
+uh(1)=0;
+vh(1)=-2;
+h=0.001;
+x=0:h:1;
+for j=2:length(x)
+    k11=A(1,:)*[uh(j-1);vh(j-1)]+1000.25;
+    k21=A(2,:)*[uh(j-1);vh(j-1)];
+    k12=A(1,:)*[uh(j-1)+k11*h/2;vh(j-1)+k21*h/2]+1000.25;
+    k22=A(2,:)*[uh(j-1)+k11*h/2;vh(j-1)+k21*h/2];
+    k13=A(1,:)*[uh(j-1)+k12*h/2;vh(j-1)+k22*h/2]+1000.25;
+    k23=A(2,:)*[uh(j-1)+k12*h/2;vh(j-1)+k22*h/2];
+    k14=A(1,:)*[uh(j-1)+k13*h;vh(j-1)+k23*h]+1000.25;
+    k24=A(2,:)*[uh(j-1)+k13*h;vh(j-1)+k23*h];
+    uh(j)=uh(j-1)+h/6*(k11+2*k12+2*k13+k14);
+    vh(j)=vh(j-1)+h/6*(k21+2*k22+2*k23+k24);
+end
+figure(1)
+semilogy(x,abs(uh-uf(x))./abs(uf(x)))
+title('u的相对误差')
+figure(2)
+semilogy(x,abs(vh-vf(x))./abs(vf(x)))
+title('v的相对误差')
+

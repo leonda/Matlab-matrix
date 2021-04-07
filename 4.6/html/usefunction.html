@@ -1,0 +1,281 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>usefunction</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-06"><meta name="DC.source" content="usefunction.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#35843;&#29992;newton&#25554;&#20540;&#27861;&#30830;&#23450;&#32463;&#36807;&#36825;&#20123;&#28857;&#30340;9&#38454;&#22810;&#39033;&#24335;</span>
+X=(0:1:9);
+Y=[67.052,68.008,69.803,72.024,73.400,72.063,74.669,74.487,74.065,76.777];
+x=linspace(0,20);
+M=1;
+[y,R,A,C,L] = newton(X, Y, x, M)
+<span class="comment">%y&#26159;&#22312;&#21521;&#37327;x&#22788;&#30340;&#25554;&#20540;&#65292;&#35823;&#24046;&#38480;R&#65292;n&#27425;newton&#22810;&#39033;&#24335;L&#20197;&#21450;&#31995;&#25968;&#24120;&#37327;C</span>
+plot(X, Y, <span class="string">'or'</span>, x, y, <span class="string">'.k'</span>);
+legend(<span class="string">'&#26679;&#26412;&#28857;'</span>,<span class="string">'&#29275;&#39039;&#25554;&#20540;&#20272;&#31639;'</span>);
+x=18
+f =-(1695361414010883*x^9)/2305843009213693952 + (4227396721652201*x^8)/144115188075855872 - (8819278816003891*x^7)/18014398509481984 + (4994493159566287*x^6)/1125899906842624 - (3333749145844049*x^5)/140737488355328 + (5324582419842471*x^4)/70368744177664 - (2460605999175011*x^3)/17592186044416 + (4766208684428403*x^2)/35184372088832 - (7120293268944661*x)/140737488355328 + 16763/250
+</pre><pre class="codeoutput">
+y =
+
+   1.0e+07 *
+
+  &#21015; 1 &#33267; 7
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 8 &#33267; 14
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 15 &#33267; 21
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 22 &#33267; 28
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 29 &#33267; 35
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 36 &#33267; 42
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 43 &#33267; 49
+
+    0.0000    0.0000    0.0000    0.0000    0.0000   -0.0000   -0.0000
+
+  &#21015; 50 &#33267; 56
+
+   -0.0000   -0.0001   -0.0001   -0.0002   -0.0003   -0.0004   -0.0006
+
+  &#21015; 57 &#33267; 63
+
+   -0.0008   -0.0012   -0.0016   -0.0022   -0.0030   -0.0040   -0.0052
+
+  &#21015; 64 &#33267; 70
+
+   -0.0068   -0.0088   -0.0112   -0.0142   -0.0179   -0.0225   -0.0279
+
+  &#21015; 71 &#33267; 77
+
+   -0.0346   -0.0425   -0.0520   -0.0633   -0.0768   -0.0926   -0.1113
+
+  &#21015; 78 &#33267; 84
+
+   -0.1332   -0.1588   -0.1886   -0.2233   -0.2634   -0.3098   -0.3632
+
+  &#21015; 85 &#33267; 91
+
+   -0.4245   -0.4948   -0.5752   -0.6669   -0.7712   -0.8897   -1.0239
+
+  &#21015; 92 &#33267; 98
+
+   -1.1757   -1.3471   -1.5401   -1.7572   -2.0009   -2.2740   -2.5795
+
+  &#21015; 99 &#33267; 100
+
+   -2.9207   -3.3012
+
+
+R =
+
+   1.0e+05 *
+
+  &#21015; 1 &#33267; 7
+
+         0    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 8 &#33267; 14
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 15 &#33267; 21
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 22 &#33267; 28
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 29 &#33267; 35
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 36 &#33267; 42
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 43 &#33267; 49
+
+    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000    0.0000
+
+  &#21015; 50 &#33267; 56
+
+    0.0000    0.0000    0.0000    0.0000    0.0001    0.0001    0.0001
+
+  &#21015; 57 &#33267; 63
+
+    0.0002    0.0003    0.0004    0.0006    0.0008    0.0011    0.0015
+
+  &#21015; 64 &#33267; 70
+
+    0.0020    0.0026    0.0034    0.0044    0.0057    0.0073    0.0093
+
+  &#21015; 71 &#33267; 77
+
+    0.0118    0.0148    0.0185    0.0230    0.0285    0.0351    0.0430
+
+  &#21015; 78 &#33267; 84
+
+    0.0525    0.0637    0.0771    0.0930    0.1117    0.1336    0.1594
+
+  &#21015; 85 &#33267; 91
+
+    0.1895    0.2247    0.2655    0.3128    0.3676    0.4308    0.5035
+
+  &#21015; 92 &#33267; 98
+
+    0.5870    0.6827    0.7922    0.9171    1.0594    1.2211    1.4047
+
+  &#21015; 99 &#33267; 100
+
+    1.6125    1.8476
+
+
+A =
+
+  &#21015; 1 &#33267; 7
+
+   67.0520         0         0         0         0         0         0
+   68.0080    0.9560         0         0         0         0         0
+   69.8030    1.7950    0.4195         0         0         0         0
+   72.0240    2.2210    0.2130   -0.0688         0         0         0
+   73.4000    1.3760   -0.4225   -0.2118   -0.0357         0         0
+   72.0630   -1.3370   -1.3565   -0.3113   -0.0249    0.0022         0
+   74.6690    2.6060    1.9715    1.1093    0.3552    0.0760    0.0123
+   74.4870   -0.1820   -1.3940   -1.1218   -0.5578   -0.1826   -0.0431
+   74.0650   -0.4220   -0.1200    0.4247    0.3866    0.1889    0.0619
+   76.7770    2.7120    1.5670    0.5623    0.0344   -0.0704   -0.0432
+
+  &#21015; 8 &#33267; 10
+
+         0         0         0
+         0         0         0
+         0         0         0
+         0         0         0
+         0         0         0
+         0         0         0
+         0         0         0
+   -0.0079         0         0
+    0.0150    0.0029         0
+   -0.0150   -0.0038   -0.0007
+
+
+C =
+
+  &#21015; 1 &#33267; 7
+
+   -0.0007    0.0293   -0.4896    4.4360  -23.6877   75.6669 -139.8693
+
+  &#21015; 8 &#33267; 10
+
+  135.4638  -50.5927   67.0520
+
+ 
+L =
+ 
+- (1695361414010883*x^9)/2305843009213693952 + (4227396721652201*x^8)/144115188075855872 - (8819278816003891*x^7)/18014398509481984 + (4994493159566287*x^6)/1125899906842624 - (3333749145844049*x^5)/140737488355328 + (5324582419842471*x^4)/70368744177664 - (2460605999175011*x^3)/17592186044416 + (4766208684428403*x^2)/35184372088832 - (7120293268944661*x)/140737488355328 + 16763/250
+ 
+
+x =
+
+    18
+
+
+f =
+
+  -9.0236e+06
+
+</pre><img vspace="5" hspace="5" src="usefunction_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%调用newton插值法确定经过这些点的9阶多项式
+X=(0:1:9);
+Y=[67.052,68.008,69.803,72.024,73.400,72.063,74.669,74.487,74.065,76.777];
+x=linspace(0,20);
+M=1;
+[y,R,A,C,L] = newton(X, Y, x, M)
+%y是在向量x处的插值，误差限R，n次newton多项式L以及系数常量C
+plot(X, Y, 'or', x, y, '.k');  
+legend('样本点','牛顿插值估算');
+x=18
+f =-(1695361414010883*x^9)/2305843009213693952 + (4227396721652201*x^8)/144115188075855872 - (8819278816003891*x^7)/18014398509481984 + (4994493159566287*x^6)/1125899906842624 - (3333749145844049*x^5)/140737488355328 + (5324582419842471*x^4)/70368744177664 - (2460605999175011*x^3)/17592186044416 + (4766208684428403*x^2)/35184372088832 - (7120293268944661*x)/140737488355328 + 16763/250
+ 
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,293 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>OLS</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-06"><meta name="DC.source" content="OLS.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#26368;&#23567;&#20108;&#20056;&#27861;&#25311;&#21512;&#20026;&#30452;&#32447;&#12289;&#25243;&#29289;&#32447;&#12289;&#19977;&#27425;&#26354;&#32447;</span>
+<span class="comment">%&#30452;&#32447;y=a1+a2*x</span>
+X=[1994:1:2003];<span class="comment">%0&#34920;&#31034;1994&#65292;9&#34920;&#31034;2003</span>
+Y=[67.052,68.008,69.803,72.024,73.400,72.063,74.669,74.487,74.065,76.777];
+plot(X,Y,<span class="string">'ro'</span>);
+hold <span class="string">on</span>
+sx=sum(X);
+sx2=sum(X.*X);
+sy=sum(Y);
+sxy=sum(X.*Y);
+A=[10,sx;sx,sx2];
+b=[sy;sxy];
+a1=GaussElimination(A,b)<span class="comment">%Gauss&#28040;&#21435;&#27861;&#27714;&#35299;</span>
+f1=a1(1)+a1(2).*X;
+plot(X,f1,<span class="string">'k-'</span>)
+<span class="comment">%&#20108;&#27425;&#26354;&#32447;y=a0+a1*x+a2*x^2</span>
+sx3=sum(X.^3);
+sx4=sum(X.^4);
+sx2y=sum(X.^2.*Y);
+A=[10,sx,sx2;sx,sx2,sx3;sx2,sx3,sx4];
+b=[sy;sxy;sx2y];
+a2=GaussElimination(A,b)<span class="comment">%Gauss&#28040;&#21435;&#27861;&#27714;&#35299;</span>
+f2=a2(1)+a2(2).*X+a2(3).*X.^2;
+plot(X,f2,<span class="string">'b-'</span>)
+<span class="comment">%&#19977;&#27425;&#26354;&#32447;&#25311;&#21512;y=a0+a1*x+a2*x^2+a3*x^3</span>
+sx5=sum(X.^5);
+sx6=sum(X.^6);
+sx3y=sum(X.^3.*Y);
+A=[10,sx,sx2,sx3;sx,sx2,sx3,sx4;sx2,sx3,sx4,sx5;sx3,sx4,sx5,sx6];<span class="comment">%&#31995;&#25968;&#30697;&#38453;</span>
+b=[sy;sxy;sx2y;sx3y];
+a3=GaussElimination(A,b)<span class="comment">%Gauss&#28040;&#21435;&#27861;&#27714;&#35299;</span>
+f3=a3(1)+a3(2).*X+a3(3).*X.^2+a3(4).*X.^3;
+ans1=0;
+k=1
+<span class="keyword">for</span> i=1994:2003
+    ans1=ans1+(a3(1)+a3(2)*i+a3(3)*i^2+a3(4)*i^3-Y(k))^2
+    k=k+1
+<span class="keyword">end</span>
+ans1=sqrt(ans1)
+plot(X,f3,<span class="string">'g*'</span>)
+l=legend(<span class="string">'1994-2003&#23545;&#24212;&#20135;&#27833;&#37327;'</span>,<span class="string">'&#26368;&#23567;&#20108;&#20056;&#27861;&#25311;&#21512;&#30340;&#30452;&#32447;'</span>,<span class="string">'&#26368;&#23567;&#20108;&#20056;&#27861;&#25311;&#21512;&#30340;&#20108;&#27425;&#26354;&#32447;'</span>,<span class="string">'&#26368;&#23567;&#20108;&#20056;&#27861;&#25311;&#21512;&#19977;&#27425;&#26354;&#32447;'</span>,<span class="string">'orientation'</span>,<span class="string">'vertical'</span>,<span class="string">'location'</span>,<span class="string">'eastoutside'</span>);<span class="comment">%&#22270;&#20363;&#25918;&#22312;&#21491;&#20391;</span>
+</pre><pre class="codeoutput">
+a1 =
+
+   1.0e+03 *
+
+   -1.8650
+    0.0010
+
+
+a2 =
+
+   1.0e+05 *
+
+   -2.9084
+    0.0029
+   -0.0000
+
+
+a3 =
+
+   1.0e+06 *
+
+   -2.7272
+    0.0039
+   -0.0000
+    0.0000
+
+
+k =
+
+     1
+
+
+ans1 =
+
+    0.0030
+
+
+k =
+
+     2
+
+
+ans1 =
+
+    0.3025
+
+
+k =
+
+     3
+
+
+ans1 =
+
+    0.3280
+
+
+k =
+
+     4
+
+
+ans1 =
+
+    0.9736
+
+
+k =
+
+     5
+
+
+ans1 =
+
+    2.1162
+
+
+k =
+
+     6
+
+
+ans1 =
+
+    3.6365
+
+
+k =
+
+     7
+
+
+ans1 =
+
+    3.9410
+
+
+k =
+
+     8
+
+
+ans1 =
+
+    4.0368
+
+
+k =
+
+     9
+
+
+ans1 =
+
+    5.6511
+
+
+k =
+
+    10
+
+
+ans1 =
+
+    6.7339
+
+
+k =
+
+    11
+
+
+ans1 =
+
+    2.5950
+
+</pre><img vspace="5" hspace="5" src="OLS_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%最小二乘法拟合为直线、抛物线、三次曲线
+%直线y=a1+a2*x
+X=[1994:1:2003];%0表示1994，9表示2003
+Y=[67.052,68.008,69.803,72.024,73.400,72.063,74.669,74.487,74.065,76.777];
+plot(X,Y,'ro');
+hold on
+sx=sum(X);
+sx2=sum(X.*X);
+sy=sum(Y);
+sxy=sum(X.*Y);
+A=[10,sx;sx,sx2];
+b=[sy;sxy];
+a1=GaussElimination(A,b)%Gauss消去法求解
+f1=a1(1)+a1(2).*X;
+plot(X,f1,'k-')
+%二次曲线y=a0+a1*x+a2*x^2
+sx3=sum(X.^3);
+sx4=sum(X.^4);
+sx2y=sum(X.^2.*Y);
+A=[10,sx,sx2;sx,sx2,sx3;sx2,sx3,sx4];
+b=[sy;sxy;sx2y];
+a2=GaussElimination(A,b)%Gauss消去法求解
+f2=a2(1)+a2(2).*X+a2(3).*X.^2;
+plot(X,f2,'b-')
+%三次曲线拟合y=a0+a1*x+a2*x^2+a3*x^3
+sx5=sum(X.^5);
+sx6=sum(X.^6);
+sx3y=sum(X.^3.*Y);
+A=[10,sx,sx2,sx3;sx,sx2,sx3,sx4;sx2,sx3,sx4,sx5;sx3,sx4,sx5,sx6];%系数矩阵
+b=[sy;sxy;sx2y;sx3y];
+a3=GaussElimination(A,b)%Gauss消去法求解
+f3=a3(1)+a3(2).*X+a3(3).*X.^2+a3(4).*X.^3;
+ans1=0;
+k=1
+for i=1994:2003
+    ans1=ans1+(a3(1)+a3(2)*i+a3(3)*i^2+a3(4)*i^3-Y(k))^2
+    k=k+1
+end
+ans1=sqrt(ans1)
+plot(X,f3,'g*')
+l=legend('1994-2003对应产油量','最小二乘法拟合的直线','最小二乘法拟合的二次曲线','最小二乘法拟合三次曲线','orientation','vertical','location','eastoutside');%图例放在右侧
+
+##### SOURCE END #####
+--></body></html>

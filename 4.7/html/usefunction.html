@@ -1,0 +1,374 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>usefunction</title><meta name="generator" content="MATLAB 9.9"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-12-07"><meta name="DC.source" content="usefunction.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%&#35843;&#29992;&#19977;&#27425;&#26679;&#26465;&#20989;&#25968;&#20013;&#28385;&#36275;&#31532;&#20108;&#31867;&#36793;&#30028;&#26465;&#20214;</span>
+x=[0 1 2 3 4];
+y=[1 3 3 4 2];
+y0=0;          <span class="comment">%  S''(x0)=f''(x0)=y0</span>
+yn=0;          <span class="comment">%  S''(xn)=f''(xn)=yn</span>
+x0=0:0.01:4;
+s=t_simple(x,y,x0,y0,yn)
+plot(x0,s)        <span class="comment">%&#32472;&#21046;&#31532;&#20108;&#36793;&#30028;&#26465;&#20214;&#25554;&#20540;&#20989;&#25968;&#22270;&#20687;</span>
+hold <span class="string">on</span>
+grid <span class="string">on</span>
+plot(x,y,<span class="string">'o'</span>)
+xlabel(<span class="string">'&#33258;&#21464;&#37327;'</span>), ylabel(<span class="string">'&#22240;&#21464;&#37327;'</span>)
+title(<span class="string">'&#25554;&#20540;&#28857;&#19982;&#19977;&#27425;&#26679;&#26465;&#20989;&#25968;'</span>)
+legend(<span class="string">'&#19977;&#27425;&#26679;&#26465;&#25554;&#20540;&#28857;&#22352;&#26631;'</span>,<span class="string">'&#25554;&#20540;&#28857;'</span>)
+</pre><pre class="codeoutput">
+D =
+
+    2.0000    0.5000         0
+    0.5000    2.0000    0.5000
+         0    0.5000    2.0000
+
+
+h =
+
+     1     1     1     1
+
+
+A =
+
+    1.0000         0         0         0         0
+    3.0000    2.0000         0         0         0
+    3.0000         0   -1.0000         0         0
+    4.0000    1.0000    0.5000    0.5000         0
+    2.0000   -2.0000   -1.5000   -0.6667   -0.2917
+
+
+g =
+
+    -6
+     3
+    -9
+
+
+M =
+
+         0
+   -3.9643
+    3.8571
+   -5.4643
+         0
+
+
+s =
+
+  &#21015; 1 &#33267; 7
+
+    1.0000    1.0266    1.0532    1.0798    1.1064    1.1330    1.1595
+
+  &#21015; 8 &#33267; 14
+
+    1.1860    1.2125    1.2390    1.2654    1.2918    1.3181    1.3444
+
+  &#21015; 15 &#33267; 21
+
+    1.3707    1.3969    1.4230    1.4491    1.4751    1.5010    1.5269
+
+  &#21015; 22 &#33267; 28
+
+    1.5526    1.5783    1.6039    1.6294    1.6549    1.6802    1.7054
+
+  &#21015; 29 &#33267; 35
+
+    1.7305    1.7555    1.7804    1.8051    1.8298    1.8543    1.8787
+
+  &#21015; 36 &#33267; 42
+
+    1.9029    1.9270    1.9510    1.9748    1.9985    2.0220    2.0454
+
+  &#21015; 43 &#33267; 49
+
+    2.0685    2.0916    2.1144    2.1371    2.1596    2.1819    2.2041
+
+  &#21015; 50 &#33267; 56
+
+    2.2260    2.2478    2.2693    2.2907    2.3118    2.3327    2.3535
+
+  &#21015; 57 &#33267; 63
+
+    2.3740    2.3942    2.4143    2.4341    2.4537    2.4731    2.4922
+
+  &#21015; 64 &#33267; 70
+
+    2.5110    2.5297    2.5480    2.5661    2.5840    2.6015    2.6188
+
+  &#21015; 71 &#33267; 77
+
+    2.6359    2.6526    2.6691    2.6853    2.7012    2.7168    2.7321
+
+  &#21015; 78 &#33267; 84
+
+    2.7471    2.7618    2.7762    2.7903    2.8040    2.8175    2.8306
+
+  &#21015; 85 &#33267; 91
+
+    2.8434    2.8558    2.8680    2.8797    2.8912    2.9023    2.9130
+
+  &#21015; 92 &#33267; 98
+
+    2.9234    2.9334    2.9430    2.9523    2.9612    2.9697    2.9779
+
+  &#21015; 99 &#33267; 105
+
+    2.9856    2.9930    3.0000    3.0066    3.0128    3.0186    3.0241
+
+  &#21015; 106 &#33267; 112
+
+    3.0291    3.0339    3.0382    3.0423    3.0460    3.0493    3.0524
+
+  &#21015; 113 &#33267; 119
+
+    3.0551    3.0576    3.0597    3.0616    3.0632    3.0645    3.0655
+
+  &#21015; 120 &#33267; 126
+
+    3.0663    3.0669    3.0672    3.0672    3.0671    3.0667    3.0661
+
+  &#21015; 127 &#33267; 133
+
+    3.0653    3.0644    3.0632    3.0619    3.0604    3.0587    3.0569
+
+  &#21015; 134 &#33267; 140
+
+    3.0549    3.0528    3.0506    3.0482    3.0457    3.0432    3.0405
+
+  &#21015; 141 &#33267; 147
+
+    3.0377    3.0349    3.0319    3.0289    3.0259    3.0228    3.0196
+
+  &#21015; 148 &#33267; 154
+
+    3.0164    3.0132    3.0100    3.0067    3.0034    3.0002    2.9969
+
+  &#21015; 155 &#33267; 161
+
+    2.9937    2.9905    2.9873    2.9842    2.9811    2.9781    2.9751
+
+  &#21015; 162 &#33267; 168
+
+    2.9723    2.9695    2.9667    2.9641    2.9616    2.9592    2.9569
+
+  &#21015; 169 &#33267; 175
+
+    2.9548    2.9528    2.9509    2.9492    2.9476    2.9462    2.9450
+
+  &#21015; 176 &#33267; 182
+
+    2.9439    2.9431    2.9424    2.9420    2.9417    2.9417    2.9419
+
+  &#21015; 183 &#33267; 189
+
+    2.9424    2.9431    2.9440    2.9452    2.9467    2.9485    2.9505
+
+  &#21015; 190 &#33267; 196
+
+    2.9529    2.9555    2.9584    2.9617    2.9653    2.9692    2.9734
+
+  &#21015; 197 &#33267; 203
+
+    2.9780    2.9830    2.9883    2.9939    3.0000    3.0064    3.0133
+
+  &#21015; 204 &#33267; 210
+
+    3.0204    3.0280    3.0359    3.0441    3.0527    3.0615    3.0707
+
+  &#21015; 211 &#33267; 217
+
+    3.0802    3.0900    3.1001    3.1104    3.1210    3.1319    3.1430
+
+  &#21015; 218 &#33267; 224
+
+    3.1544    3.1659    3.1777    3.1897    3.2019    3.2143    3.2269
+
+  &#21015; 225 &#33267; 231
+
+    3.2396    3.2525    3.2656    3.2788    3.2921    3.3056    3.3191
+
+  &#21015; 232 &#33267; 238
+
+    3.3328    3.3466    3.3604    3.3744    3.3884    3.4025    3.4166
+
+  &#21015; 239 &#33267; 245
+
+    3.4307    3.4449    3.4591    3.4734    3.4876    3.5018    3.5160
+
+  &#21015; 246 &#33267; 252
+
+    3.5302    3.5444    3.5585    3.5725    3.5865    3.6004    3.6143
+
+  &#21015; 253 &#33267; 259
+
+    3.6280    3.6417    3.6552    3.6687    3.6820    3.6951    3.7082
+
+  &#21015; 260 &#33267; 266
+
+    3.7210    3.7337    3.7462    3.7586    3.7707    3.7827    3.7944
+
+  &#21015; 267 &#33267; 273
+
+    3.8059    3.8172    3.8283    3.8391    3.8496    3.8599    3.8699
+
+  &#21015; 274 &#33267; 280
+
+    3.8796    3.8890    3.8982    3.9070    3.9154    3.9236    3.9314
+
+  &#21015; 281 &#33267; 287
+
+    3.9389    3.9460    3.9527    3.9590    3.9650    3.9706    3.9757
+
+  &#21015; 288 &#33267; 294
+
+    3.9805    3.9848    3.9887    3.9921    3.9951    3.9976    3.9996
+
+  &#21015; 295 &#33267; 301
+
+    4.0012    4.0023    4.0029    4.0029    4.0025    4.0015    4.0000
+
+  &#21015; 302 &#33267; 308
+
+    3.9979    3.9953    3.9922    3.9885    3.9844    3.9796    3.9744
+
+  &#21015; 309 &#33267; 315
+
+    3.9687    3.9625    3.9557    3.9485    3.9408    3.9326    3.9239
+
+  &#21015; 316 &#33267; 322
+
+    3.9148    3.9052    3.8952    3.8846    3.8737    3.8623    3.8504
+
+  &#21015; 323 &#33267; 329
+
+    3.8382    3.8255    3.8124    3.7988    3.7849    3.7705    3.7558
+
+  &#21015; 330 &#33267; 336
+
+    3.7407    3.7251    3.7092    3.6929    3.6763    3.6592    3.6419
+
+  &#21015; 337 &#33267; 343
+
+    3.6241    3.6060    3.5876    3.5688    3.5497    3.5303    3.5105
+
+  &#21015; 344 &#33267; 350
+
+    3.4904    3.4701    3.4494    3.4284    3.4071    3.3855    3.3637
+
+  &#21015; 351 &#33267; 357
+
+    3.3415    3.3191    3.2964    3.2735    3.2503    3.2268    3.2031
+
+  &#21015; 358 &#33267; 364
+
+    3.1792    3.1550    3.1306    3.1060    3.0812    3.0561    3.0308
+
+  &#21015; 365 &#33267; 371
+
+    3.0054    2.9797    2.9538    2.9278    2.9016    2.8752    2.8486
+
+  &#21015; 372 &#33267; 378
+
+    2.8219    2.7950    2.7680    2.7408    2.7134    2.6860    2.6584
+
+  &#21015; 379 &#33267; 385
+
+    2.6307    2.6028    2.5749    2.5468    2.5186    2.4903    2.4620
+
+  &#21015; 386 &#33267; 392
+
+    2.4335    2.4050    2.3764    2.3477    2.3190    2.2902    2.2613
+
+  &#21015; 393 &#33267; 399
+
+    2.2324    2.2034    2.1744    2.1454    2.1164    2.0873    2.0582
+
+  &#21015; 400 &#33267; 401
+
+    2.0291    2.0000
+
+</pre><img vspace="5" hspace="5" src="usefunction_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%调用三次样条函数中满足第二类边界条件
+x=[0 1 2 3 4];
+y=[1 3 3 4 2];
+y0=0;          %  S''(x0)=f''(x0)=y0   
+yn=0;          %  S''(xn)=f''(xn)=yn
+x0=0:0.01:4;
+s=t_simple(x,y,x0,y0,yn)
+plot(x0,s)        %绘制第二边界条件插值函数图像
+hold on
+grid on
+plot(x,y,'o')
+xlabel('自变量'), ylabel('因变量')
+title('插值点与三次样条函数') 
+legend('三次样条插值点坐标','插值点')
+
+##### SOURCE END #####
+--></body></html>
